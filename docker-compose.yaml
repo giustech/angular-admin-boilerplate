@@ -1,0 +1,20 @@
+version: '3.7'
+services:
+
+  deploy:
+    build:
+      context: .
+    environment:
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_KEY}
+      TF_VAR_account_number : ${AWS_ACCOUNT_NUMBER}
+      TERRAFORM_BUCKET: ${AWS_BUCKET_TERRAFORM}
+      TERRAFORM_BUCKET_REGION: "us-east-1"
+      AWS_REGION: "us-east-1"
+      TERRAFORM_KEY: "poc/ng/terraform.tfstate"
+      TF_VAR_function_name: "go-example"
+    volumes:
+      - .:/files
+    working_dir:
+      /init
+    entrypoint: sh /files/entry-point.sh
